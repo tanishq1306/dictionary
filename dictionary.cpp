@@ -96,7 +96,7 @@ string deduce_day (int year, int month, int day) {
     
     int day_indx = (year + (year / 4) - (year / 100) +  (year / 400) + lookUp[month - 1] + day) % 7;  
 	day_indx = (day_indx == 0? 7: day_indx);
-	cout << day_indx << "\n";
+
     return days[day_indx - 1];
 }
 
