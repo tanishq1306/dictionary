@@ -66,12 +66,37 @@ void output (vector<Dictionary> &D) {
 
 string deduce_day (int year, int month, int day) {
 	// CAN VALIDATE DATE USING TRY CATCH BLOCK
+	try {
+		if (year < 1970 || year > 2100) {
+			throw 0;
+		}
+		if (month > 12 || month < 1) {
+			throw 1;
+		}
+		if (day > 31 || day < 1) {
+			throw 2;
+		}
+	}
+	catch (int i) {
+		cout << "\nINVALID DATE EXCEPTION\n";
+		if (i == 0) {
+			cout << "INVALID YEAR";
+		}
+		else if (i == 1) {
+			cout << "INVALID MONTH";
+		}
+		else {
+			cout << "INVALID DAY";
+		}
+		exit(0);
+	}
+	
 	int lookUp[] = {0, 3, 2, 5, 0, 3, 5, 1, 4, 6, 2, 4};  
     year -= (month < 3);  
     
     int day_indx = (year + (year / 4) - (year / 100) +  (year / 400) + lookUp[month - 1] + day) % 7;  
 	day_indx = (day_indx == 0? 7: day_indx);
-  
+	cout << day_indx << "\n";
     return days[day_indx - 1];
 }
 
@@ -83,9 +108,9 @@ vector<Dictionary> solution (const vector<Dictionary> &D, int n) {
 		int year, month, day;
 	
 		// KEY FORMAT - YYYY-MM-DD
-		year = (D[indx].key[1] -'0') * 1000 + (D[indx].key[1] -'0') * 100 + (D[indx].key[2] -'0') * 10 + (D[indx].key[3] -'0');
+		year = (D[indx].key[0] -'0') * 1000 + (D[indx].key[1] -'0') * 100 + (D[indx].key[2] -'0') * 10 + (D[indx].key[3] -'0');
 		month = (D[indx].key[5] -'0') * 10 + (D[indx].key[6] -'0');
-		day = (D[indx].key[8] -'0') * 1000 + (D[indx].key[9] -'0');
+		day = (D[indx].key[8] -'0') * 10 + (D[indx].key[9] -'0');
 				
 		string str = deduce_day (year, month, day);
 		hash[str] += D[indx].value;
